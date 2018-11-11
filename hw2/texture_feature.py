@@ -34,7 +34,10 @@ Using FFT method.
 
 def filename_to_hist_feat(filename):
     image = Image.open(filename)
-#     ratio = min(maxsize / image.size[0], maxsize / image.size[1])
+    minsize = min(image.size[0], image.size[1])
+    ymin, xmin = int((image.size[0] - minsize) / 2), int((image.size[1] - minsize) / 2)
+    image = np.array(image)[xmin:xmin+minsize, ymin:ymin+minsize, :]
+    image = Image.fromarray(image)
     image = image.resize((maxsize, maxsize), Image.ANTIALIAS)
     image = np.array(image)
     
@@ -90,7 +93,7 @@ class ScoreFunctions(object):
 
 # In[6]:
 '''
-Given a query, returning the list sorted by similarity.
+Given a query, returning the reference list sorted by similarity.
 '''
 
 def retrieval(query, func, top=5):
@@ -125,7 +128,7 @@ def Sat1and5(q, func=ScoreFunctions.cosine_similarity):
 
 # In[9]:
 '''
-Given distance metric, calculate the S@1 and S@5 score of the computed features.
+Given distance metric, calculate the S@1 and S@5 score of the computed features. (Multiprocess)
 '''
 
 from functools import partial

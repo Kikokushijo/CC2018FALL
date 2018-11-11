@@ -35,6 +35,7 @@ def filename_to_keypoints(filename):
     image = Image.open(filename)
     gray = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2GRAY)
     sift = cv2.xfeatures2d.SIFT_create()
+    kp, des = sift.detectAndCompute(gray, None)
     names = filename.split('/')
     return Picture(category=names[1], camera=names[2], index=names[3], feature=des)
 
@@ -149,7 +150,7 @@ class ScoreFunctions(object):
 
 # In[12]:
 '''
-Given a query, returning the list sorted by similarity.
+Given a query, returning the reference list sorted by similarity.
 '''
 
 def retrieval(query, func, top=5):
@@ -184,7 +185,7 @@ def Sat1and5(q, func=ScoreFunctions.cosine_similarity):
 
 # In[36]:
 '''
-Given distance metric, calculate the S@1 and S@5 score of the computed features.
+Given distance metric, calculate the S@1 and S@5 score of the computed features. (Multiprocess)
 '''
 
 from functools import partial

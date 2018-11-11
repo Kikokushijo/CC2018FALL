@@ -82,7 +82,7 @@ class ScoreFunctions(object):
 
 # In[6]:
 '''
-Given a query, returning the list sorted by similarity.
+Given a query, returning the reference list sorted by similarity.
 '''
 
 def retrieval(query, func, top=5):
@@ -117,7 +117,7 @@ def Sat1and5(q, func):
 
 # In[14]:
 '''
-Given distance metric, calculate the S@1 and S@5 score of the computed features.
+Given distance metric, calculate the S@1 and S@5 score of the computed features. (Multiprocess)
 '''
 
 from functools import partial
