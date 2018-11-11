@@ -126,7 +126,7 @@ from collections import defaultdict
 chunksize = 32
 Sat1s, Sat5s = defaultdict(list), defaultdict(list)
 with concurrent.futures.ProcessPoolExecutor(max_workers=10) as executor:
-    for q, (Sat1, Sat5) in zip(query_pics, executor.map(partial(Sat1and5, func=ScoreFunctions.cosine_similarity), query_pics, chunksize=chunksize)):
+    for q, (Sat1, Sat5) in zip(query_pics, executor.map(partial(Sat1and5, func=ScoreFunctions.chi_square), query_pics, chunksize=chunksize)):
         Sat1s[q.category].append(Sat1)
         Sat5s[q.category].append(Sat5)
 
